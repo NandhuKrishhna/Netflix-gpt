@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { LOGIN_BG_IMG_URL } from "../utils/constants";
+import { checkValidData } from "../utils/validate";
+
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Login = () => {
+  const [isSignInFrom, setIsSignFrom] = useState(true);
+  const email = useRef(null);
+  const password = useRef(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // toggle function to change from Sign In => Sign Up vice versa
+  const tooglesignInForm = () => {
+    setIsSignFrom(!isSignInFrom);
+  };
+
+  // To get the email and password and calling validation function
+  const handleButtonClick = () => {
+    const message = checkValidData(email.current.value, password.current.value);
+    console.log(message);
+    setErrorMessage(message);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div
       className="relative h-screen bg-cover bg-center"
@@ -10,25 +34,44 @@ const Login = () => {
     >
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       <Header />
-      <form className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[450px] max-h-[735px] w-full h-full space-y-6 bg-black bg-opacity-80 px-[68px] py-[48px] rounded-sm mt-6 box-border">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[450px] max-h-[735px] w-full h-full space-y-6 bg-black bg-opacity-80 px-[68px] py-[48px] rounded-sm mt-6 box-border"
+      >
         <h1 className="text-4xl text-white font-bold">Sign In</h1>
 
         <input
+          ref={email}
           type="text"
           placeholder="Email or mobile number"
           className="w-full p-3 bg-[#101011] bg-opacity-60 text-white rounded-sm focus:outline-none focus:ring-2 focus:ring-red-500"
         />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-3 bg-[#101011] bg-opacity-60 text-white rounded-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
+        <div className="relative">
+          <input
+            ref={password}
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full p-3 bg-[#101011] bg-opacity-60 text-white rounded-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+          >
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </button>
+        </div>
+
+        <p className="text-red-800 font-bold">{errorMessage}</p>
         <button
+          onClick={handleButtonClick}
           type="submit"
           className="w-full p-3 bg-[#c11119] text-white font-bold rounded-sm hover:bg-red-700 transition"
         >
-          Sign In
+          {isSignInFrom ? "Sign In " : "Sign Up"}
         </button>
         <div className="text-white opacity-70 text-center">
           <h2>OR</h2>
@@ -41,19 +84,21 @@ const Login = () => {
             Forgot password?
           </a>
         </div>
-        <div className="text-white">
-          <span className="text-gray-400">New to Netflix? </span>
-          <a href="/signup" className="text-white font-semibold hover:underline">
-            Sign up now.
-          </a>
+        <div className="text-white flex gap-1 ">
+          <p className="text-gray-400">
+            {isSignInFrom ? "New to Netflix" : "Already registered?"}
+          </p>
+          <p
+            onClick={tooglesignInForm}
+            className="text-white font-semibold cursor-pointer hover:underline"
+          >
+            {isSignInFrom ? "Sign Up Now" : "Sign In Now"}
+          </p>
         </div>
         <p className="text-gray-400 text-sm ">
-        This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className="text-blue-700">
-          Learn more.
-        </span>
+          This page is protected by Google reCAPTCHA to ensure you're not a bot.{" "}
+          <span className="text-blue-700">Learn more.</span>
         </p>
-
-       
       </form>
     </div>
   );
