@@ -1,9 +1,9 @@
 import React from 'react'
-
+import Header from './Header'
 const Browrse = () => {
   return (
     <div>
-      Browse
+    <Header isLoggedIn={true} />
     </div>
   )
 }
