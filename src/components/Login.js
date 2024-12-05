@@ -41,7 +41,7 @@ const Login = () => {
       createUserWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
           const user  = userCredential.user;
-          // console.log(user)
+          console.log(user)
           navigate("/browse")
         })
         .catch((error) => {
