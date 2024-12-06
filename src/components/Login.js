@@ -81,9 +81,9 @@ const Login = () => {
       <div className="absolute inset-0 flex items-center justify-center">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="w-full max-w-[450px] space-y-6 bg-black bg-opacity-80 px-[68px] py-[48px] rounded-sm mt-6 box-border"
+          className="w-full max-w-[450px] sm:max-w-[90%] md:max-w-[450px] space-y-6 bg-black bg-opacity-80 px-[68px] py-[48px] rounded-sm mt-6 box-border"
         >
-          <h1 className="text-4xl text-white font-bold">
+          <h1 className="text-4xl text-white font-bold text-center sm:text-3xl">
             {isSignInFrom ? "Sign In" : "Sign Up"}
           </h1>
 
@@ -118,20 +118,23 @@ const Login = () => {
           >
             {isSignInFrom ? "Sign In" : "Sign Up"}
           </button>
+
           <div className="text-white opacity-70 text-center">
             <h2>OR</h2>
           </div>
           <button className="text-white font-bold w-full p-2 bg-[#919191] rounded-sm bg-opacity-40">
             Use a sign-in code
           </button>
+
           <div className="text-center">
             <a href="/forgot-password" className="text-white hover:underline">
               Forgot password?
             </a>
           </div>
-          <div className="text-white flex gap-1 ">
+
+          <div className="text-white flex gap-1 justify-center">
             <p className="text-gray-400">
-              {isSignInFrom ? "New to Netflix" : "Already registered?"}
+              {isSignInFrom ? "New to Netflix?" : "Already registered?"}
             </p>
             <p
               onClick={tooglesignInForm}
@@ -140,7 +143,8 @@ const Login = () => {
               {isSignInFrom ? "Sign Up Now" : "Sign In Now"}
             </p>
           </div>
-          <p className="text-gray-400 text-sm ">
+
+          <p className="text-gray-400 text-sm text-center mt-4">
             This page is protected by Google reCAPTCHA to ensure you're not a bot.{" "}
             <span className="text-blue-700">Learn more.</span>
           </p>
